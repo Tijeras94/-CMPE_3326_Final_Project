@@ -44,6 +44,12 @@ public class Sprite extends Rectangle implements ISprite, ICollision {
 
     public void setAlpha(float alpha) {
         this.alpha = alpha;
+        if (this.alpha <= 0.0f) {
+            this.alpha = 0.0f;
+        }
+        if (this.alpha >= 1.0f) {
+            this.alpha = 1.0f;
+        }
     }
 
     public void setRotationOffset(double rotationOffset) {
@@ -89,7 +95,6 @@ public class Sprite extends Rectangle implements ISprite, ICollision {
         if (this.debug_box) {
             g.setColor(Color.green);
             g.drawRect(this.x - width / 2, this.y - height / 2, width, height);
-
         }
 
     }
@@ -147,5 +152,19 @@ public class Sprite extends Rectangle implements ISprite, ICollision {
         if ((this.y - (this.getHeight() / 2)) >= bh - this.height) {
             this.y = bh - this.height + ((int) this.getHeight() / 2);
         }
+    }
+
+    public boolean valueInRange(int value, int min, int max) {
+        return (value >= min) && (value <= max);
+    }
+
+    public boolean rectOverlap(Sprite B) {
+        boolean xOverlap = valueInRange(this.x, B.x, B.x + B.width)
+                || valueInRange(B.x, this.x, this.x + this.width);
+
+        boolean yOverlap = valueInRange(this.y, B.y, B.y + B.height)
+                || valueInRange(B.y, this.y, this.y + this.height);
+
+        return xOverlap && yOverlap;
     }
 }

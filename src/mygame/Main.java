@@ -6,6 +6,7 @@
 package mygame;
   
 import mygame.engine.Window;
+import mygame.shotter.Shotter;
 
 /**
  *
@@ -18,8 +19,8 @@ public class Main {
      * @param args the command line arguments
      */
     public static void main(String[] args) { 
-        Window win = new Window("Sime Game", 900, 600, false); 
-        win.start(60, GameTest.class);
+        Window win = new Window("Space Shooter", 320, 568, false); 
+        win.start(60, Shotter.class);
     }
 
 }

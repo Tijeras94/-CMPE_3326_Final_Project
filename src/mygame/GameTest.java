@@ -10,6 +10,7 @@ import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
 import mygame.engine.AudioPlayer;
+import mygame.engine.Font;
 import mygame.engine.SimpleGame;
 import mygame.engine.Sprite;
 import mygame.engine.TextureAtlas;
@@ -33,6 +34,8 @@ public class GameTest extends SimpleGame {
     Sprite as;
 
     Sprite hero;
+    
+    Font text = new Font("spaceArt/GoodDog.ttf");
 
     public GameTest(int width, int height) {
         super(width, height);
@@ -43,12 +46,12 @@ public class GameTest extends SimpleGame {
         as = attlas.getMovieClip("fly_");
         as.x = as.y = 100;
         hero = attlas.getMovieClip("watchOut_");
-        hero.x = hero.y = 250;
+        hero.x = hero.y = 250; 
     }
 
     @Override
     public void draw(Graphics2D g) {
-
+       
         player.draw(g);
         enemy.draw(g);
         for (int j = 0; j < bullets.size(); j++) {
@@ -59,6 +62,7 @@ public class GameTest extends SimpleGame {
         as.draw(g);
 
         hero.draw(g);
+        text.draw("Hello World", this.getWidth()/2, 0, 60, g);
     }
 
     @Override
