@@ -58,7 +58,7 @@ public class Game extends Sprite {
 
         pl.update();
 
-        if (enemies.size() < 2) {
+        if (enemies.size() < 3) {
             spawnEnemys();
         }
 
@@ -112,7 +112,16 @@ public class Game extends Sprite {
     }
 
     private void spawnEnemys() {
-        Enemy b = new Enemy(this, 1, randomRange(2, 5));
+    	Enemy b ;
+    	
+    	if(randomRange(1,2) == 2)
+    	{
+    		b = new Enemy2("SShotter/enemyShip.png", this, 2, randomRange(1, 2));
+    	}else
+    	{
+    		b = new Enemy("SShotter/meteorSmall.png", this, 1, randomRange(1, 4));;
+    	}
+    	
         b.x = randomRange(pl.width / 2, (int) (this.getWidth() - pl.getWidth() / 2));
         b.y = 0;
         enemies.add(b);

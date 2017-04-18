@@ -9,13 +9,15 @@ class Enemy extends Sprite {
     private Sprite stage;
     private boolean toRemove = false;
 
-    public Enemy(Sprite stage, int _damage, int _speed) {
-        super("SShotter/meteorSmall.png");
+    public Enemy(String pimg, Sprite stage, int _damage, int _speed) {
+        super(pimg);
         this.stage = stage;
         this.speed = _speed;
         this.damage = _damage;
     }
-
+    
+    
+    
     @Override
     public void update() {
         this.y += speed;

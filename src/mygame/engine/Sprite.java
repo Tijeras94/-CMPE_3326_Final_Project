@@ -31,7 +31,7 @@ public class Sprite extends Rectangle implements ISprite, ICollision {
     /* Create an ARGB BufferedImage */
     public BufferedImage img;
 
-    private boolean debug_box = true;
+    private boolean debug_box = false;
     private float alpha = 1.0f;
 
     public void toggleDebug() {
