@@ -10,9 +10,6 @@ class Enemy2 extends Enemy {
     @Override
     public void update() {
         super.update();
-        this.rotation = 1;
-
-    }
-    
-
+        this.rotation = 1; 
+    } 
 }

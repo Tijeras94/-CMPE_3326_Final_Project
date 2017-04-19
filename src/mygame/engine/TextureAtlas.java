@@ -66,7 +66,7 @@ public class TextureAtlas {
 
                 // DO SOMETHING WITH THIS DATA HERE
                 // GET THE PICTURE FROM SHEET WITH THESE.
-                System.out.println(name);
+                //System.out.println(name);
                 items.put(name, new SubTextureAttrib(this,subTextureElement));
             }
             

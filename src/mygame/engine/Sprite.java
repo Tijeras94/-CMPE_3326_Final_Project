@@ -31,6 +31,12 @@ public class Sprite extends Rectangle implements ISprite, ICollision {
     /* Create an ARGB BufferedImage */
     public BufferedImage img;
 
+    private boolean centerPivot = true;
+
+    public void setCenterPivot(boolean centerPivot) {
+        this.centerPivot = centerPivot;
+    }
+
     private boolean debug_box = false;
     private float alpha = 1.0f;
 
@@ -89,12 +95,20 @@ public class Sprite extends Rectangle implements ISprite, ICollision {
         trans.rotate(Math.toRadians(rotation - rotationOffset), x, y); // the points to rotate around (the center in my example, your left side for your problem)
         g.transform(trans);
 
-        g.drawImage(img, x - width / 2, y - height / 2, null);
-
+        if (centerPivot) {
+            g.drawImage(img, x - width / 2, y - height / 2, null);
+        } else {
+            g.drawImage(img, x , y , null);
+        }
         g.setTransform(backup); // restore previous transfor
         if (this.debug_box) {
+
             g.setColor(Color.green);
-            g.drawRect(this.x - width / 2, this.y - height / 2, width, height);
+            if (centerPivot) {
+                g.drawRect(this.x - width / 2, this.y - height / 2, width, height);
+            } else {
+                g.drawRect(this.x, this.y, width, height);
+            }
         }
 
     }
@@ -166,5 +180,13 @@ public class Sprite extends Rectangle implements ISprite, ICollision {
                 || valueInRange(B.y, this.y, this.y + this.height);
 
         return xOverlap && yOverlap;
+    }
+
+    public Sprite clone() {
+        BufferedImage b = new BufferedImage(img.getWidth(), img.getHeight(), img.getType());
+        Graphics2D g = (Graphics2D) b.getGraphics();
+        g.drawImage(img, 0, 0, null);
+        g.dispose();
+        return new Sprite(b);
     }
 }
