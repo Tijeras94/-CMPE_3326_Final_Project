@@ -30,27 +30,29 @@ public class Game extends Sprite {
     private int enemySpawnCounter;
     private int enemySpawnMaxCount;
     private int score;
-    private boolean isGameOver;
+    public boolean isGameOver;
 
     Hud gameHud;
+    Demo2 game;
 
-    public Game() {
+    public Game(Demo2 game) {
         super("Demo2Assets/mainbackground.png");
-
+        this.game = game;
         player = new Player(this, anim);
         player.toggleDebug();
         gameHud = new Hud(this);
-        init();
+        this.player.y = game.getHeight() / 2;
+        this.player.x = 0; 
     }
 
     @Override
     public void draw(Graphics2D g) {
-        super.draw(g);
+
         bg.draw(g);
         player.draw(g);
 
         gameHud.draw(g);
-        
+
         //DrawProjectile
         for (int j = projectiles.size() - 1; j >= 0; j--) {
             projectiles.get(j).draw(g);
@@ -65,11 +67,11 @@ public class Game extends Sprite {
         for (int j = explosions.size() - 1; j >= 0; j--) {
             explosions.get(j).draw(g);
         }
-
     }
 
     @Override
     public void update() {
+
         bg.update();
         player.update();
 
@@ -97,7 +99,7 @@ public class Game extends Sprite {
 
         UpdateCollision();
 
-        System.out.println(projectiles.size());
+        CheckForEndGame();
     }
 
     void AddProjectile() {
@@ -142,11 +144,11 @@ public class Game extends Sprite {
 
                         score += enemies.get(j).Value;
 
-                         gameHud.setScore(score);
+                        gameHud.setScore(score);
                     } else {
                         player.Health -= enemies.get(j).Damage;
 
-                         gameHud.setLives(player.Health);
+                        gameHud.setLives(player.Health);
                     }
 
                     enemies.get(j).destroy();
@@ -159,20 +161,25 @@ public class Game extends Sprite {
         enemySpawnCounter++;
     }
 
-    private void init() {
-
+    public void init() {
         musicSound.play();
         gameHud.init();
-
         gameHud.setLives(player.Health);
         enemySpawnCounter = 0;
         enemySpawnMaxCount = 60;
         score = 0;
         isGameOver = false;
 
-        //   clearArrayObjects(enemies);
-        //  clearArrayObjects(projectiles);
-        //  clearArrayObjects(explosions);
+        for (int j = explosions.size() - 1; j >= 0; j--) {
+            explosions.get(j).destroy();
+            explosions.remove(j);
+        }
+
+        for (int j = enemies.size() - 1; j >= 0; j--) {
+            enemies.get(j).destroy();
+            enemies.remove(j);
+        }
+
     }
 
     private void AddEnemy() {
@@ -220,6 +227,25 @@ public class Game extends Sprite {
         ex.x = (int) (x + ex.getWidth() / 2);
         ex.y = y;
         explosions.add(ex);
+    }
+
+    private void CheckForEndGame() {
+        if (player.Health <= 0) {
+            player.Health = 100;
+            this.game.gameScore = score;
+            score = 0;
+            gameHud.setLives(100);
+            gameHud.setScore(0);
+
+            this.musicSound.stop();
+
+            this.player.y = game.getHeight() / 2;
+            this.player.x = 0;
+
+            isGameOver = true;
+            this.game.scene = 2;
+            this.game.over.reset();
+        }
     }
 
 }

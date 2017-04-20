@@ -3,7 +3,7 @@
  * Final Project(Spring 2017)
  * CSCI/CMPE 3326 
  */
-package mygame.shotter;
+package mygame.demo.shotter;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
@@ -30,9 +30,9 @@ public class Hud extends Sprite {
     public void draw(Graphics2D g) {
         super.draw(g);
         String lc = "Lives: " + this.life;
-        text.draw(lc, this.x, this.y, 30, g);
+        text.draw(lc, this.x, this.y + 20, 30, g);
         String sc = "Score: " + this.score;
-        text.draw(sc, (int) (stage.getWidth() - sc.length() * 10), this.y, 30, g);
+        text.draw(sc, (int) (stage.getWidth() - sc.length() * 10), this.y + 20, 30, g);
     }
 
     public void setScore(int x) {

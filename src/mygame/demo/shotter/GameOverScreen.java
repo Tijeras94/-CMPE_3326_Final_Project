@@ -1,4 +1,4 @@
-package mygame.shotter;
+package mygame.demo.shotter;
 
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;

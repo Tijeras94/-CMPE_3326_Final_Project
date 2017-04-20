@@ -3,9 +3,10 @@
  * Final Project(Spring 2017)
  * CSCI/CMPE 3326 
  */
-package mygame.shotter;
+package mygame.demo.shotter;
 
 import java.awt.Graphics2D;
+import mygame.engine.AudioPlayer;
 import mygame.engine.SimpleGame;
 
 /**
@@ -17,13 +18,17 @@ public class Shotter extends SimpleGame {
     private StartScreen sScreen;
     private Game inGame;
     private GameOverScreen gameOver;
+    private final AudioPlayer music;
 
     public Shotter(int width, int height) {
         super(width, height);
 
+        music = new AudioPlayer("spaceArt/music.wav");
         sScreen = new StartScreen();
         inGame = new Game();
         gameOver = new GameOverScreen(inGame);
+        music.play();
+        music.setVolume(0.2f);
     }
 
     @Override
@@ -42,7 +47,9 @@ public class Shotter extends SimpleGame {
     @Override
     public boolean update() {
 
-        inGame.update();
+        if(sScreen.getAlpha() == 0)
+            inGame.update();
+        
         gameOver.update();
         
         if (inGame.isGameOver() && gameOver.getType() == 0) {

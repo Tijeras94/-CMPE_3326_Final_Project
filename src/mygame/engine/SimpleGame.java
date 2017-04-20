@@ -27,5 +27,4 @@ public abstract class SimpleGame implements IRender {
     public int getHeight() {
         return height;
     }
-
 }

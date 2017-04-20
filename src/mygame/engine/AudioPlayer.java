@@ -13,6 +13,7 @@ import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
+import javax.sound.sampled.FloatControl;
 import javax.sound.sampled.LineEvent;
 import javax.sound.sampled.LineListener;
 import javax.sound.sampled.LineUnavailableException;
@@ -37,6 +38,12 @@ public class AudioPlayer implements LineListener {
         init(s, autoDestroy);
     }
 
+    public void setVolume(float vol) {
+        FloatControl volume = (FloatControl) clip.getControl(FloatControl.Type.MASTER_GAIN);
+        float gainAmount = (float) (Math.log(vol) / Math.log(10.0) * 20.0);
+        volume.setValue(gainAmount);
+    }
+
     public void play() {
         if (clip == null) {
             return;
@@ -56,15 +63,14 @@ public class AudioPlayer implements LineListener {
         stop();
         clip.close();
     }
-     
 
     @Override
     public void update(LineEvent event) {
-        LineEvent.Type type = event.getType(); 
+        LineEvent.Type type = event.getType();
         if (type == LineEvent.Type.STOP) {
-              clip.close();
+            clip.close();
             try {
-                  dais.close();
+                dais.close();
                 ais.close();
             } catch (IOException ex) {
                 Logger.getLogger(AudioPlayer.class.getName()).log(Level.SEVERE, null, ex);
@@ -89,15 +95,14 @@ public class AudioPlayer implements LineListener {
                     baseFormat.getSampleRate(),
                     false
             );
-             dais = AudioSystem.getAudioInputStream(
-                            decodeFormat, ais);
+            dais = AudioSystem.getAudioInputStream(
+                    decodeFormat, ais);
             clip = AudioSystem.getClip();
 
             if (autoDestroy) {
                 clip.addLineListener(this);
             }
 
-          
             clip.open(dais);
         } catch (IOException | LineUnavailableException | UnsupportedAudioFileException e) {
             e.printStackTrace();

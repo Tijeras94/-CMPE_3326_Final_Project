@@ -1,4 +1,4 @@
-package mygame.shotter;
+package mygame.demo.shotter;
 
 import mygame.engine.Sprite;
 

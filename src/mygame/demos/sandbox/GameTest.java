@@ -3,7 +3,7 @@
  * Final Project(Spring 2017)
  * CSCI/CMPE 3326 
  */
-package mygame;
+package mygame.demos.sandbox;
 
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;

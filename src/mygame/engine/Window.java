@@ -8,9 +8,9 @@ package mygame.engine;
 import java.awt.Dimension;
 import java.awt.KeyboardFocusManager;
 import java.awt.Toolkit;
-import javax.swing.JFrame; 
+import javax.swing.JFrame;
 import mygame.engine.io.FullScreenHandler;
-import mygame.engine.io.KeyboardDispatcher; 
+import mygame.engine.io.KeyboardDispatcher;
 
 /**
  *
@@ -19,24 +19,26 @@ import mygame.engine.io.KeyboardDispatcher;
 public class Window {
 
     private static final int MAX_FRAMESKIP = 5;
+    public static boolean DEBUG = false;
+
     private final Dimension windowSize;
     private final JFrame app;
-    private Renderer stage;  
+    private Renderer stage;
     private final boolean isFullScreen;
-    
+
     private final int width;
     private final int height;
-    
+
     public Window(String title, int width, int height, boolean isFullScreen) {
         this.width = width;
         this.height = height;
-        
+
         // Get the size of the screen
         windowSize = Toolkit.getDefaultToolkit().getScreenSize();
 
         // Create game window...
         app = new JFrame();
-        
+
         app.setTitle(title);
 
         app.setResizable(false);
@@ -46,9 +48,7 @@ public class Window {
         app.setIgnoreRepaint(true);
 
         app.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        
-        
-        
+
         this.isFullScreen = isFullScreen;
     }
 
@@ -62,13 +62,10 @@ public class Window {
         } else {
             stage = new Stage(this.width, this.height, game);
         }
- 
-   
-        
+
         KeyboardFocusManager manager = KeyboardFocusManager.getCurrentKeyboardFocusManager();
         manager.addKeyEventDispatcher(new KeyboardDispatcher());
 
-        
         // Add canvas to game window...
         app.add(stage.getCanvas());
 
@@ -102,11 +99,11 @@ public class Window {
             // Let the OS have a little time...
             Thread.yield();
         }
-        
+
         if (isFullScreen) {
             FullScreenHandler.getInstance().exitFullScreen();
         }
-        
+
         System.exit(0);
     }
 }

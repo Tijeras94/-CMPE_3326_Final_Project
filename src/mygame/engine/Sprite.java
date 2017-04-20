@@ -37,7 +37,7 @@ public class Sprite extends Rectangle implements ISprite, ICollision {
         this.centerPivot = centerPivot;
     }
 
-    private boolean debug_box = false;
+    private boolean debug_box = true;
     private float alpha = 1.0f;
 
     public void toggleDebug() {
@@ -98,10 +98,10 @@ public class Sprite extends Rectangle implements ISprite, ICollision {
         if (centerPivot) {
             g.drawImage(img, x - width / 2, y - height / 2, null);
         } else {
-            g.drawImage(img, x , y , null);
+            g.drawImage(img, x, y, null);
         }
         g.setTransform(backup); // restore previous transfor
-        if (this.debug_box) {
+        if (this.debug_box && Window.DEBUG) {
 
             g.setColor(Color.green);
             if (centerPivot) {
@@ -111,6 +111,25 @@ public class Sprite extends Rectangle implements ISprite, ICollision {
             }
         }
 
+    }
+
+    //Adds Alpha to A Buffer Image
+    public static void modAlpha(BufferedImage modMe, double modAmount) {
+        //
+        for (int x = 0; x < modMe.getWidth(); x++) {
+            for (int y = 0; y < modMe.getHeight(); y++) {
+                //
+                int argb = modMe.getRGB(x, y); //always returns TYPE_INT_ARGB
+                int alpha = (argb >> 24) & 0xff;  //isolate alpha
+
+                alpha *= modAmount; //similar distortion to tape saturation (has scrunching effect, eliminates clipping)
+                alpha &= 0xff;      //keeps alpha in 0-255 range
+
+                argb &= 0x00ffffff; //remove old alpha info
+                argb |= (alpha << 24);  //add new alpha info
+                modMe.setRGB(x, y, argb);
+            }
+        }
     }
 
     @Override

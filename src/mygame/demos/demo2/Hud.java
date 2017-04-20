@@ -31,9 +31,9 @@ public class Hud extends Sprite {
     public void draw(Graphics2D g) {
         super.draw(g);
         String lc = "Health: " + this.life;
-        text.draw(lc, this.x, this.y, 30, g);
+        text.draw(lc, this.x + 20, this.y + 20, 30, g);
         String sc = "Score: " + this.score;
-        text.draw(sc, (int) (stage.getWidth() - sc.length() * 10), this.y, 30, g);
+        text.draw(sc, (int) ((stage.getWidth() - sc.length() * 10) - 5), this.y + 20, 30, g);
     }
 
     public void setScore(int x) {
